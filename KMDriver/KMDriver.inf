@@ -28,7 +28,7 @@ KMDriver.sys  = 1,,
 %ManufacturerName%=Standard,NT$ARCH$.10.0...16299 ; %13% support introduced in build 16299
 
 [Standard.NT$ARCH$.10.0...16299]
-%KMDriver.DeviceDesc%=KMDriver_Device, USB\VID_vvvv&PID_pppp
+%KMDriver.DeviceDesc%=KMDriver_Device, Root\KMDriver
 
 [KMDriver_Device.NT]
 CopyFiles=File_Copy
@@ -40,6 +40,8 @@ KMDriver.sys
 AddReg=KMDriver_AddReg
 
 [KMDriver_AddReg]
+; VHF 为源设备创建虚拟 HID 子设备。
+HKR,,LowerFilters,0x00010000,"vhf"
 ; By default, USBDevice class uses iProduct descriptor to name the device
 ; Uncomment for this device to use %KMDriver.DeviceDesc%
 ;HKR,,FriendlyName,,%KMDriver.DeviceDesc%
@@ -64,7 +66,7 @@ KmdfLibraryVersion = $KMDFVERSION$
 
 [Strings]
 SPSVCINST_ASSOCSERVICE= 0x00000002
-ManufacturerName="<Your manufacturer name>" ;TODO: Replace with your manufacturer name
+ManufacturerName="KMEmulator"
 DiskName = "KMDriver Installation Disk"
 KMDriver.DeviceDesc = "KMDriver Device"
 KMDriver.SVCDESC = "KMDriver Service"

@@ -1,55 +1,14 @@
-========================================================================
-    KMDriver Project Overview
-========================================================================
+KMDriver
+========
+Windows 10/11 KMDF + VHF 虚拟键盘鼠标源驱动。
 
-This file contains a summary of what you will find in each of the files that make up your project.
+Device.c/h：创建独占命令设备和 VHF 子设备，管理输入释放及 PnP 生命周期。
+Queue.c/h：校验、分发并执行 IOCTL，协议版本查询及释放全部输入。
+HIDReport.c/h：虚拟键码到 HID 使用码映射、键盘与鼠标载荷编码。
+Public.h：用户态/内核态控制码与命令布局。
+Shared.h：早期共享内存方案的历史定义，当前实现不使用。
+Driver.c/h、Trace.h：驱动入口、WDF 生命周期与 WPP 日志。
+KMDriver.inf：Root\KMDriver 的安装配置，注册 vhf 为 LowerFilters。
 
-KMDriver.vcxproj
-    This is the main project file for projects generated using an Application Wizard. 
-    It contains information about the version of the product that generated the file, and 
-    information about the platforms, configurations, and project features selected with the
-    Application Wizard.
-
-KMDriver.vcxproj.filters
-    This is the filters file for VC++ projects generated using an Application Wizard. 
-    It contains information about the association between the files in your project 
-    and the filters. This association is used in the IDE to show grouping of files with
-    similar extensions under a specific node (for e.g. ".cpp" files are associated with the
-    "Source Files" filter).
-
-KMDriver.inf
-    Text file used for driver installation. After creating this driver using the template, the user
-    *must* update the hardware ID from "USB\VID_vvvv&PID_pppp" to the hardware ID of the USB device
-    that the driver should be installed on.
-
-Public.h
-    Header file to be shared with applications. 
- 
-Driver.c & Driver.h
-    DriverEntry and WDFDRIVER related functionality and callbacks.
- 
-Device.cpp & Device.h
-    WDFDEVICE and WDFUSBDEVICE related functionality and callbacks.
-
-IoQueue.cpp & IoQueue.h
-    WDFQUEUE related functionality and callbacks.
-
-Trace.h
-    Definitions for WPP tracing.
-
-/////////////////////////////////////////////////////////////////////////////
-
-Learn more about Kernel Mode Driver Framework here:
-
-http://msdn.microsoft.com/en-us/library/ff544296(v=VS.85).aspx
-
-Learn more about KMDF USB APIs here:
-
-http://msdn.microsoft.com/en-us/library/ff544752(v=vs.85).aspx
-
-Related WDK samples and what they demonstrate:
-
-    osrusbfx2 - bulk/interrupt transfers, continuous readers
-    usbsamp - isochronous transfers
-
-/////////////////////////////////////////////////////////////////////////////
+安装需要创建 root 枚举设备，不能仅通过 sc create/start 创建服务。
+完整使用说明和构建方式见根目录 README.md。

@@ -1,4 +1,4 @@
-/*++
+﻿/*++
 
 模块名称：
 
@@ -63,6 +63,10 @@ DEFINE_GUID (GUID_DEVINTERFACE_KMDriver,
 //     适合不涉及敏感操作的命令（如果需要限制，可改为 FILE_WRITE_ACCESS）。
 //
 #define FILE_DEVICE_VIRTUAL_HID 0x8000
+// 释放所有按键，防止脚本停止后残留输入。
+#define IOCTL_KM_RELEASE_ALL CTL_CODE(FILE_DEVICE_VIRTUAL_HID, 0x804, METHOD_BUFFERED, FILE_ANY_ACCESS)
+// 协议查询成功返回 ULONG 版本号，当前为 1。
+#define IOCTL_KM_QUERY_STATUS CTL_CODE(FILE_DEVICE_VIRTUAL_HID, 0x805, METHOD_BUFFERED, FILE_ANY_ACCESS)
 
 // 键盘输入控制码：用户态发送一次按键事件（按下或松开一个键）
 #define IOCTL_HID_SEND_KEYBOARD_INPUT \

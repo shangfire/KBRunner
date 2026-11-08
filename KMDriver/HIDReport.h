@@ -28,6 +28,10 @@
 #define _HIDREPORT_H_
 
 EXTERN_C_START
+// 不支持的键码返回 0，供 IOCTL 输入校验使用。
+UCHAR VirtualKeyToHidCode(UCHAR VirtualKey);
+// 普通键返回 0，修饰键返回对应的位掩码。
+UCHAR GetModifierBits(UCHAR VirtualKey);
 
 //
 // 构建 HID 键盘报文
