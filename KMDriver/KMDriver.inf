@@ -1,5 +1,5 @@
 ;
-; USBDriver1.inf
+; KMDriver.inf
 ;
 
 [Version]
@@ -7,7 +7,7 @@ Signature="$WINDOWS NT$"
 Class=USBDevice
 ClassGuid={88BAE032-5A81-49f0-BC3D-A4FF138216D6}
 Provider=%ManufacturerName%
-CatalogFile=USBDriver1.cat
+CatalogFile=KMDriver.cat
 DriverVer=
 PnpLockDown=1
 
@@ -18,7 +18,7 @@ DefaultDestDir = 13
 1 = %DiskName%,,,""
 
 [SourceDisksFiles]
-USBDriver1.sys  = 1,,
+KMDriver.sys  = 1,,
 
 ;*****************************************
 ; Install Section
@@ -28,43 +28,43 @@ USBDriver1.sys  = 1,,
 %ManufacturerName%=Standard,NT$ARCH$.10.0...16299 ; %13% support introduced in build 16299
 
 [Standard.NT$ARCH$.10.0...16299]
-%USBDriver1.DeviceDesc%=USBDriver1_Device, USB\VID_vvvv&PID_pppp
+%KMDriver.DeviceDesc%=KMDriver_Device, USB\VID_vvvv&PID_pppp
 
-[USBDriver1_Device.NT]
+[KMDriver_Device.NT]
 CopyFiles=File_Copy
 
 [File_Copy]
-USBDriver1.sys
+KMDriver.sys
 
-[USBDriver1_Device.NT.HW]
-AddReg=USBDriver1_AddReg
+[KMDriver_Device.NT.HW]
+AddReg=KMDriver_AddReg
 
-[USBDriver1_AddReg]
+[KMDriver_AddReg]
 ; By default, USBDevice class uses iProduct descriptor to name the device
-; Uncomment for this device to use %USBDriver1.DeviceDesc%
-;HKR,,FriendlyName,,%USBDriver1.DeviceDesc%
+; Uncomment for this device to use %KMDriver.DeviceDesc%
+;HKR,,FriendlyName,,%KMDriver.DeviceDesc%
 
 ;-------------- Service installation
-[USBDriver1_Device.NT.Services]
-AddService = USBDriver1,%SPSVCINST_ASSOCSERVICE%, USBDriver1_Service_Inst
+[KMDriver_Device.NT.Services]
+AddService = KMDriver,%SPSVCINST_ASSOCSERVICE%, KMDriver_Service_Inst
 
-; -------------- USBDriver1 driver install sections
-[USBDriver1_Service_Inst]
-DisplayName    = %USBDriver1.SVCDESC%
+; -------------- KMDriver driver install sections
+[KMDriver_Service_Inst]
+DisplayName    = %KMDriver.SVCDESC%
 ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
 StartType      = 3               ; SERVICE_DEMAND_START
 ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
-ServiceBinary  = %13%\USBDriver1.sys
+ServiceBinary  = %13%\KMDriver.sys
 
-[USBDriver1_Device.NT.Wdf]
-KmdfService =  USBDriver1, USBDriver1_wdfsect
+[KMDriver_Device.NT.Wdf]
+KmdfService =  KMDriver, KMDriver_wdfsect
 
-[USBDriver1_wdfsect]
+[KMDriver_wdfsect]
 KmdfLibraryVersion = $KMDFVERSION$
 
 [Strings]
 SPSVCINST_ASSOCSERVICE= 0x00000002
 ManufacturerName="<Your manufacturer name>" ;TODO: Replace with your manufacturer name
-DiskName = "USBDriver1 Installation Disk"
-USBDriver1.DeviceDesc = "USBDriver1 Device"
-USBDriver1.SVCDESC = "USBDriver1 Service"
+DiskName = "KMDriver Installation Disk"
+KMDriver.DeviceDesc = "KMDriver Device"
+KMDriver.SVCDESC = "KMDriver Service"
